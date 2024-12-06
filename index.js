@@ -1,13 +1,14 @@
 import express from 'express';
-require('dotenv').config()
+import 'dotenv/config'
+import auth from './src/routes/auth.js'
+
 const PORT = process.env.PORT
 
 const app = express();
 
 app.use(express.static('public'));
-// app.get('/', (req, res) => {
-//     res.send('Hello World');
-// })
+
+app.use('/api/auth', auth)
 app.listen(process.env.PORT,()=>{
 console.log(`listening on ${PORT}`);
 })
