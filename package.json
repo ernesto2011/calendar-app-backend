@@ -16,6 +16,7 @@
     "nodemon": "^3.1.4"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.14.0",
     "express": "^4.19.2"
   }
 }
