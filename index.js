@@ -1,5 +1,6 @@
 import express from 'express';
 import 'dotenv/config'
+import cors from 'cors'
 import auth from './src/routes/auth.js'
 import { dbConnection } from './src/database/config.js';
 
@@ -9,6 +10,9 @@ const app = express();
 
 //connect to db
 dbConnection();
+
+//cors
+app.use(cors())
 
 app.use(express.static('public'));
 

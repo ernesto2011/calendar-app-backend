@@ -2,6 +2,7 @@ import {Router} from 'express'
 import * as user from '../controllers/auth.js'
 import  {check} from 'express-validator'
 import validateFields from '../middlewares/validator-fields.js'
+import { validateJWT } from '../middlewares/validate-jwt.js'
 const router= Router()
 
 router.post('/new',
@@ -19,6 +20,6 @@ router.post('/',
     validateFields
 ],
 user.loginUser)
-router.post('/refresh',user.renewToken)
+router.get('/refresh',validateJWT ,user.renewToken)
 
 export default router;

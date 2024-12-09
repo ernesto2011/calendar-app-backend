@@ -1,3 +1,4 @@
+import { generateJWT } from "../helpers/jwt.js";
 import { User } from "../models/User.js";
 import bcrypt from "bcryptjs";
 
@@ -15,10 +16,11 @@ export const createUser = async (req, res) => {
     const salt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(password, salt);
     await user.save();
+    const token = await generateJWT(user.id, user.name);
     res.status(200).json({
       message: "create user",
       ok: true,
-      user,
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -45,13 +47,15 @@ export const loginUser = async (req, res) => {
         ok: false,
       });
     }
+    const token = await generateJWT(user.id, user.name);
     res.status(200).json({
       message: "login user",
       ok: true,
       uid: user.id,
       name: user.name,
+      token
     });
-    
+
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -60,9 +64,12 @@ export const loginUser = async (req, res) => {
     });
   }
 };
-export const renewToken = (req, res) => {
+export const renewToken = async(req, res) => {
+const {uid, name} = req
+  const token = await generateJWT(uid, name);
   res.json({
     message: "renew token",
     ok: true,
+    token
   });
 };
