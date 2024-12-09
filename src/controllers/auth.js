@@ -1,16 +1,25 @@
 
 export const createUser = (req, res) => {
-    res.json('creating user')
+    const user = req.body
+    
+    res.status(201).json({
+        message: 'create user',
+        ok: true,
+        user
+    })
 }
-export const getUsers = (req, res) => {
-    res.json('get users')
+export const loginUser = (req, res) => {
+    const user = req.body
+    
+    res.status(200).json({
+        message: 'login user',
+        ok: true,
+        user
+    })
 }
-export const getUser = (req, res) => {
-    res.json('get user')
-}
-export const updateUser = (req, res) => {
-    res.json('update user')
-}
-export const deleteUser = (req, res) => {
-    res.json('delete user')
+export const renewToken = (req, res) => {
+    res.json({
+        message: 'renew token',
+        ok: true,
+    })
 }
