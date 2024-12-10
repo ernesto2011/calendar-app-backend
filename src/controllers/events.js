@@ -72,5 +72,32 @@ export const updateEvent = async(req, res) => {
         })
     }
 };
-export const deleteEvent = (req, res) => {
+export const deleteEvent = async(req, res) => {
+    const eventId = req.params.id
+    try {
+        const event = await Event.findById(eventId);
+        if(!event){
+            return res.status(404).json({
+                ok: false,
+                msg: 'Evento no existe con ese id'
+            })
+        }
+        if(event.user.toString() !== req.uid){
+            return res.status(401).json({
+                ok: false,
+                msg: 'No tiene privilegio de eliminar este evento'
+            })
+        }
+        await Event.findByIdAndDelete(eventId)
+        res.status(200).json({
+            ok: true,
+            msg: 'Evento eliminado'
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Ha ocurrido un error'
+        })
+    }
 };
