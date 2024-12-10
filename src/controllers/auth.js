@@ -70,6 +70,8 @@ const {uid, name} = req
   res.json({
     message: "renew token",
     ok: true,
+    uid, 
+    name,
     token
   });
 };
